@@ -6,7 +6,7 @@
  * Author URI:
  * Version: 0.0.1
  * Plugin URI:
- * License: GPL2+
+ * License: MIT
  */
 
 /**
