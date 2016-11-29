@@ -1,0 +1,11 @@
+{
+  "name": "jussikinnula/wp-api-polylang",
+  "type": "wordpress-plugin",
+  "homepage": "https://github.com/jussikinnula/wp-api-polylang",
+  "license": "MIT",
+  "description": "Polylang integration for the WP REST API",
+  "keywords": ["Polylang", "WordPress", "WP-API"],
+  "require": {
+    "php": ">=5.3"
+  }
+}
