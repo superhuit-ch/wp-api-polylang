@@ -20,7 +20,7 @@ function polylang_json_api_init()
     $default = pll_default_language();
     $langs = pll_languages_list();
 
-    if (isset($_GET['lang']) {
+    if (isset($_GET['lang'])) {
         $cur_lang = $_GET['lang'];
     }
     if (!$cur_lang || ($cur_lang && !in_array($cur_lang, $langs))) {
