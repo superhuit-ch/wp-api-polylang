@@ -4,7 +4,7 @@
  * Description: Polylang integration for the WP REST API
  * Author: Jorge R Garcia
  * Author URI:
- * Version: 0.0.2
+ * Version: 0.0.3
  * Plugin URI:
  * License: MIT
  */
@@ -23,7 +23,7 @@ function polylang_json_api_init()
     if (isset($_GET['lang'])) {
         $cur_lang = $_GET['lang'];
     }
-    if (!$cur_lang || ($cur_lang && !in_array($cur_lang, $langs))) {
+    if (!isset($cur_lang) || (isset($cur_lang) && !in_array($cur_lang, $langs))) {
         $cur_lang = $default;
     }
 
