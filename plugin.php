@@ -4,7 +4,7 @@
  * Description: Polylang integration for the WP REST API
  * Author: Jorge R Garcia
  * Author URI:
- * Version: 0.0.1
+ * Version: 0.0.2
  * Plugin URI:
  * License: MIT
  */
