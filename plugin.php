@@ -74,11 +74,11 @@ add_action('rest_api_init', 'polylang_json_api_init');
 
 add_action('rest_api_init', function () {
     register_rest_route('polylang/v2', '/languages', array(
-        'methods' => 'GET',
+        'methods' => WP_REST_Server::READABLE,
         'callback' => 'polylang_json_api_languages',
     ));
     register_rest_route('polylang/v2', '/posts/(?P<id>\d+)', array(
-        'methods' => 'GET',
+        'methods' => WP_REST_Server::READABLE,
         'callback' => 'polylang_json_api_post_translations',
         'args' => array(
             'id' => array(
@@ -90,7 +90,7 @@ add_action('rest_api_init', function () {
         )
     ));
     register_rest_route('polylang/v2', '/term/(?P<id>\d+)', array(
-        'methods' => 'GET',
+        'methods' => WP_REST_Server::READABLE,
         'callback' => 'polylang_json_api_term_translations',
         'args' => array(
             'id' => array(
