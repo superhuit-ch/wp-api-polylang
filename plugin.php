@@ -2,7 +2,7 @@
 /**
  * Plugin Name: WP REST API - Polylang
  * Description: Polylang integration for the WP REST API
- * Author: Jorge R Garcia / Lucas Freitas
+ * Author: Jorge R Garcia / Lucas Freitas / Felipe Paul Martins
  * Author URI:
  * Version: 0.0.5
  * Plugin URI:
@@ -55,6 +55,14 @@ function polylang_json_api_post_translations($request)
 }
 
 /**
+ * Set a post language
+ */
+function polylang_json_api_set_post_language($request) {
+    pll_set_post_language( $request['id'], $request['lang'] );
+    return true;
+}
+
+/**
  * Get the post data in a specific language.
  */
 function polylang_json_api_other_post($request)
@@ -78,14 +86,48 @@ add_action('rest_api_init', function () {
         'callback' => 'polylang_json_api_languages',
     ));
     register_rest_route('polylang/v2', '/posts/(?P<id>\d+)', array(
-        'methods' => WP_REST_Server::READABLE,
-        'callback' => 'polylang_json_api_post_translations',
-        'args' => array(
-            'id' => array(
-                'validate_callback' => function($param, $request, $key) {
-                    return true;
-                    return is_numeric( $param );
-                }
+        array(
+            'methods' => WP_REST_Server::READABLE,
+            'callback' => 'polylang_json_api_post_translations',
+            'args' => array(
+                'id' => array(
+                    'type'     => 'number',
+                    'required' => true,
+                    'validate_callback' => 'is_numeric'
+                )
+            )
+        ),
+        array(
+            'methods' => WP_REST_Server::EDITABLE,
+            'callback' => 'polylang_json_api_set_post_language',
+            'args' => array(
+                'id' => array(
+                    'type'              => 'number',
+                    'required'          => true,
+                    'validate_callback' => function($param, $request, $key) {
+                        $valid = is_numeric( $param );
+
+                        if ($valid) {
+                            $valid = (get_post_status( $param ) !== FALSE);
+                        }
+
+                        return $valid;
+                    }
+                ),
+                'lang' => array(
+                    'type'              => 'string',
+                    'required'          => true,
+                    'description'       => __( 'Language code to define to the post', 'polylang-json-api' ),
+                    'validate_callback' => function($param, $request, $key) {
+                        $valid = is_string( $param );
+
+                        if ($valid) {
+                            $valid = in_array($param, pll_languages_list());
+                        }
+
+                        return $valid;
+                    }
+                )
             )
         )
     ));
